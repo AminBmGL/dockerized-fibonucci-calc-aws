@@ -1,0 +1,22 @@
+sudo: required
+servives:
+  - docker
+
+before_install:
+  - docker build -t medamin2019/fib-test -f ./frontend/Dockerfile.dev ./frontend
+  
+script:
+  - docker run medamin2019/fib-test npm test -- --coverage
+
+after_success:
+  - docker build -t medamin2019/fib-client ./frontend
+  - docker build -t medamin2019/fib-server ./express
+  - docker build -t medamin2019/fib-nginx ./nginx
+  - docker build -t medamin2019/fib-worker ./worker
+  #Log in to docker hub 
+  - echo "$DOCKER_PASSWORD" | docker login -u "DOCKER_ID" --password-stdin
+  #Push images to docker hub
+  - docker push medamin2019/fib-client
+  - docker push medamin2019/fib-server
+  - docker push medamin2019/fib-nginx
+  - docker push medamin2019/fib-worker
