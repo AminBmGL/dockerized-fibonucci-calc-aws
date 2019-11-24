@@ -14,7 +14,7 @@ after_success:
   - docker build -t medamin2019/fib-nginx ./nginx
   - docker build -t medamin2019/fib-worker ./worker
   #Log in to docker hub 
-  - echo "$DOCKER_PASSWORD" | docker login -u "DOCKER_ID" --password-stdin
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   #Push images to docker hub
   - docker push medamin2019/fib-client
   - docker push medamin2019/fib-server
