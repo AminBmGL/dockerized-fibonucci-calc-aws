@@ -20,3 +20,16 @@ after_success:
   - docker push medamin2019/fib-server
   - docker push medamin2019/fib-nginx
   - docker push medamin2019/fib-worker
+
+deploy:
+  provider: elasticbeanstalk
+  region: eu-west-1
+  app: fib-calc
+  env: FibCalc-env
+  bucket_name: elasticbeanstalk-eu-west-1-783264633047
+  bucket_path: fib-calc
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_KEY
