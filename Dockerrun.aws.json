@@ -1,0 +1,36 @@
+{
+    "AWSEBDockerrunVersion":2,
+    "containerDefinitions":[
+        {
+            "name":"client",
+            "image":"medamin2019/fib-client",
+            "hostname":"client",
+            "essential":false
+        },
+        {
+            "name":"server",
+            "image":"medamin2019/fib-server",
+            "hostname":"api",
+            "essential":false
+        },
+        {
+            "name":"worker",
+            "image":"medamin2019/fib-worker",
+            "hostname":"worker",
+            "essential":false
+        },
+        {
+            "name":"nginx",
+            "image":"medamin2019/fib-nginx",
+            "essential":true,
+            "portMappings" :[
+                {
+                    "hostPort":80,
+                    "containerPort":80
+                }
+            ],
+            "links":["client","server"]
+        }
+
+    ]
+}
